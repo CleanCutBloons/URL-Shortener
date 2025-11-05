@@ -131,13 +131,27 @@ def deleteURL(code):
 def signUp():
     unError = request.args.get('errorUN')
     pwError = request.args.get('errorPW')
-    return render_template("signUp.html", errorUN = unError, errorPW = pwError)
+    
+    if (unError and not pwError):
+        return render_template("signUp.html", errorUN = True)
+    if (unError and pwError):
+        return render_template("signUp.html", errorUN = True, errorPW = True)
+    if (pwError and not unError):
+        return render_template("signUp.html", errorPW = True)
+    return render_template("signUp.html")
 
 @app.route("/login/")
 def login():
     errorr = request.args.get('error')
     didSignUp = request.args.get('signedUp')
-    return render_template("login.html", error = errorr, signedUp = didSignUp)
+    
+    if (errorr and not didSignUp):
+        return render_template("login.html", error = True)
+    if (errorr and didSignUp):
+        return render_template("login.html", error = True, signedIn = True)
+    if (didSignUp and not errorr):
+        return render_template("login.html", signedIn = True)
+    return render_template("login.html")
 
 @app.route("/sign-up-finished/", methods = ["POST"])
 def finishSignUp():
