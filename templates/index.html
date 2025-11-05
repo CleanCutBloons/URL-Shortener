@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}CleanCutBloons' URL Shortener{% endblock %}
+
+{% block body %}
+
+<h1 class="title is-3 has-text-centered">Welcome to CleanCutBloons' URL Shortener!</h1>
+<p class="has-text-centered is-size-5">This website allows you to build shortened URLs that take people to URLs of your choosing.<br>You have full control over your URLs, so you can add, change, or delete them as you wish.</p><br>
+
+<div style="margin: auto; width: 25%;">
+    <a href="{{ url_for('signUp') }}" class="button is-light">Sign Up</a>
+    <a href="{{ url_for('login') }}" class="button is-dark">Login</a>
+</div>
+
+{% endblock %}

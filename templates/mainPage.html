@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}URL Management{% endblock %}
+
+{% block body %}
+
+{% if user == None %}
+    <h1 class="title is-3">You aren't logged in yet! Login or sign up for an account, then come back.</h1>
+{% else %}
+    <h1 class="title is-3">{{ user }}'s URLs</h1>
+
+    <form action="{{ url_for('insertURL') }}" method="POST">
+        <input type="text" name="url" placeholder="URL">
+        <button type="submit">Add new URL</button>
+    </form><br>
+
+    <div class="columns">
+        <div class="column is-full">
+            <table class="table is-striped is-bordered is-hoverable">
+                <thead>
+                    <th>URL Code</th>
+                    <th>Full URL</th>
+                    <th>Modify</th>
+                    <th>Delete</th>
+                </thead>
+                <tbody>
+                    {% for (urlCode, urlRedirect) in urls %}
+                        <tr>
+                            <td>{{ urlCode }}</td>
+                            <td>{{ urlRedirect }}</td>
+                            <td>
+                                <form action="{{ url_for('modifyURL', code=urlCode) }}" method="POST">
+                                    <input type="text" name="newUrl" placeholder="New URL">
+                                    <button type="submit">Modify</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="{{ url_for('deleteURL', code=urlCode) }}" method="POST">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}
