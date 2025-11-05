@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block body %}
+
+<h1 class="title is-3">Sign Up for New Account</h1>
+
+{% if errorUN %}
+    <h2 class="subtitle is-5" style="color: red;">Error: Username already exists, try logging in.</h2>
+{% endif %}
+
+{% if errorPW %}
+    <h2 class="subtitle is-5" style="color: red;">Error: Passwords do not match.</h2>
+{% endif %}
+
+<form action="{{ url_for('finishSignUp') }}" method="POST">
+    <input type="text" name="username" placeholder="Username"><br>
+    <input type="password" name="password" placeholder="Password"><br>
+    <input type="password" name="confirmPassword" placeholder="Confirm Password"><br>
+    <button type="submit">Sign Up</button>
+</form>
+
+{% endblock %}
