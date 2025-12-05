@@ -8,10 +8,13 @@ Created on Thu Oct  9 16:56:29 2025
 import mysql.connector as mysql
 import random
 import secrets
+from os import getenv
 from datetime import timedelta
 from hashlib import sha256
 from flask import Flask, redirect, url_for, session, request, render_template
+from dotenv import load_dotenv
 
+load_dotenv()
 app = Flask(__name__)
 app.secret_key = b'K2+r%&>e.v?O5@8q;W'
 app.permanent_session_lifetime = timedelta(minutes=10)
@@ -19,11 +22,11 @@ alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 def connect():
     database = mysql.connect(
-        host = "localhost",
-        user = "urluser",
-        password = "termite",
-        port = 1937,
-        database = "url_shortener"
+        host = getenv("MYSQL_HOST"),
+        user = getenv("MYSQL_USER"),
+        password = getenv("MYSQL_PASSWORD"),
+        port = int(getenv("MYSQL_PORT")),
+        database = getenv("MYSQL_DB")
     )
     return database, database.cursor()
 
@@ -209,3 +212,6 @@ def finishLogin():
     session.permanent = True
     session['username'] = username
     return redirect(url_for("mainPage"))
+
+if __name__ == "__main__":
+    app.run()
